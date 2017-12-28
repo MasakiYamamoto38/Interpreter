@@ -1,6 +1,7 @@
 package newlang3.Node;
 
-public enum NodeType {
+public enum NodeType
+{
     PROGRAM,
     STMT_LIST,
     STMT,

@@ -1,10 +1,11 @@
 package newlang3.Node;
 import newlang3.*;
 
-public class LeftVarNode
+public class LeftVarNode extends Node
 {
     private Environment env;
     private LexicalUnit lu;
+    private ValueImpl vlu;
 
     public LeftVarNode(Environment env, LexicalUnit first)
     {
@@ -15,9 +16,10 @@ public class LeftVarNode
     public static Node isMatch(Environment env, LexicalUnit first)
     {
         if (first != null) {
-            if (first.getType() == LexicalType.NAME) {
-                Node a = new LeftVarNode(env, first);
-                return a;
+            if (first.getType() == LexicalType.NAME)
+            {
+                Node nd = new LeftVarNode(env, first);
+                return nd;
             }
         }
         return null;
@@ -28,13 +30,13 @@ public class LeftVarNode
     {
         LexicalAnalyzerImpl lex = env.getInput();
         //パターン１
-        LexicalUnit unity1 = lex.get();
-        if (unity1.type == LexicalType.NAME)
+        LexicalUnit lu = lex.get();
+        if (lu.getType() == LexicalType.NAME)
         {
-            leftvar = new ValueImpl(unity1.getValue().getSValue());//変数にとって必要な情報とは名前
+            vlu = new ValueImpl(lu.getValue().getSValue());//変数にとって必要な情報とは名前
             return true;
         }
-        lex.unget(unity1);
+        lex.unget(lu);
         return false;
     }
 
@@ -42,7 +44,7 @@ public class LeftVarNode
     public ValueImpl getValue()
     {
         //leftvarの値をリターンしてあげる
-        return leftvar;
+        return vlu;
     }
 
 }

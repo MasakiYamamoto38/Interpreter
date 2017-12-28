@@ -16,12 +16,13 @@ public class StmtListNode extends Node
     private Environment env;
     private LexicalUnit lu;
 
-
-    StmtListNode(Environment targetEnv, LexicalUnit targetLu) {
+    public StmtListNode(Environment targetEnv, LexicalUnit targetLu)
+    {
         env = targetEnv;
         lu = targetLu;
     }
 
+    //StmtBlockもしくはBlockNode
     public static Node isMatch(Environment env, LexicalUnit lu) {//空っぽの箱を作る。
 
         Node node = BlockNode.isMatch(env, lu);
@@ -33,12 +34,12 @@ public class StmtListNode extends Node
             return new StmtListNode(env, lu);
 
         return null;
-
     }
 
     @Override
-    public boolean Parse() {
-        LexicalAnalyzerImpl lex =  env.getInput();
+    public boolean Parse() throws Exception
+    {
+        LexicalAnalyzerImpl lai = env.getInput();
         NodeList.clear();
 
         int count = 0; // <!!>消そう
@@ -46,16 +47,16 @@ public class StmtListNode extends Node
         {
             Node sNode;
 
-            lu = lex.get();
+            lu = lai.get();
             LexicalType lut = lu.getType();
 
-            if (lut == LexicalType.EOF || lu == null||lut == LexicalType.ELSE||lut == LexicalType.ENDIF|| lut == LexicalType.LOOP)
+            if (lut == LexicalType.EOF || lu == null ||
+                    lut == LexicalType.ELSE || lut == LexicalType.ENDIF || lut == LexicalType.LOOP)
             {
                 if(lut == LexicalType.ELSE||lut == LexicalType.ENDIF||lut == LexicalType.LOOP)
                 {
-                    //wendとelseとendifはかいぎょうした後にしかかけないため
-                    lex.unget(lu);
-                    lex.unget(new LexicalUnit(LexicalType.NL));//と書こう！
+                    lai.unget(lu);
+                    lai.unget(new LexicalUnit(LexicalType.NL));
                 }
                 break;
             }
@@ -68,16 +69,14 @@ public class StmtListNode extends Node
 
             if (sNode == null)
             {
-                lex.unget(lu);
-                return false;
-            }//nodeがもらえなかったらerror
-            //今回のunitのnodeが帰ってきた場合　parseを実行して何事もなければ次に行ける
-            lex.unget(lu);
-            if (!sNode.Parse())
-            {//文法の最終チェック
+                lai.unget(lu);
                 return false;
             }
-            count += 1;
+
+            lai.unget(lu);
+            if (!sNode.Parse()) return false;
+
+            count += 1;//<!!>消そう
             //System.out.println("ステートメント" + count + ":" + lu + "から始まります");
             NodeList.add(sNode);
         }
@@ -85,9 +84,29 @@ public class StmtListNode extends Node
         return true;
     }
 
-    public Value getValue()
+    public Value getValue() throws Exception
     {
+        Value val = null;
 
+        System.out.println("-----ステートメントリストノード-----");
+
+        int count = 0;
+        while (true)
+        {
+            if (NodeList.size() == count)
+                break;
+
+            Node popNode = NodeList.get(count);
+            count++;
+            System.out.print(count + "|");
+            val = popNode.getValue();
+        }
+        return val;
     }
 
+    @Override
+    public String toString()
+    {
+        return "";
+    }
 }

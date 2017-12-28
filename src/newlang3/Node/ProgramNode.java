@@ -8,7 +8,7 @@ public class ProgramNode extends Node
     LexicalUnit lu;
     Node stmtListNode;
 
-    ProgramNode(Environment env, LexicalUnit lu)
+    public ProgramNode(Environment env, LexicalUnit lu)
     {
         this.env = env;
         this.lu = lu;
@@ -25,8 +25,8 @@ public class ProgramNode extends Node
     }
 
     @Override
-    public boolean Parse() {//構文解析
-
+    public boolean Parse() throws Exception
+    {
         LexicalAnalyzerImpl lex = env.getInput();
 
         LexicalUnit first = lex.get();
@@ -38,8 +38,26 @@ public class ProgramNode extends Node
     }
 
     @Override
-    public Value getValue() {
-        Value value = stmtListNode.getValue();
-        return new ValueImpl("compleate program");
+    public Value getValue() throws Exception
+    {
+        Value val = stmtListNode.getValue();//test
+
+        return val;
+        //return new ValueImpl("compleate program");
+    }
+
+    @Override
+    public String toString()
+    {
+        String msg = "";
+        try
+        {
+            msg = "[" + stmtListNode.toString() + "]";
+        }
+        catch(Exception e)
+        {
+            msg = "[None]";//デバック用e.getMessage();
+        }
+        return msg;
     }
 }
