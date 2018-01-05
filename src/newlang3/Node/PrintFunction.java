@@ -1,7 +1,7 @@
 package newlang3.Node;
 
-import newlang3.LexicalUnit;
-import newlang3.ValueImpl;
+        import newlang3.LexicalUnit;
+        import newlang3.ValueImpl;
 
 //PRINT関数
 public class PrintFunction

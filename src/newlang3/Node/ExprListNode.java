@@ -2,6 +2,7 @@ package newlang3.Node;
 
 import newlang3.Environment;
 import newlang3.LexicalAnalyzerImpl;
+import newlang3.LexicalType;
 import newlang3.LexicalUnit;
 
 import java.util.List;

@@ -76,8 +76,7 @@ public class StmtListNode extends Node
             lai.unget(lu);
             if (!sNode.Parse()) return false;
 
-            count += 1;//<!!>消そう
-            //System.out.println("ステートメント" + count + ":" + lu + "から始まります");
+            count += 1;
             NodeList.add(sNode);
         }
 

@@ -15,7 +15,7 @@ public class Node {
     }
     public Node(NodeType my_type) {
         type = my_type;
-    } // 初期でnodetypeを指定してるっぽい
+    }
     public Node(Environment my_env) {
         env = my_env;
     } //env = 環境

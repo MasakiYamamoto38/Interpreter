@@ -17,7 +17,7 @@ public class ExprNode extends Node
     ValueImpl returnvalue;
     int operator;
     Node varnode;
-    LexicalUnit Name = null;//変数の名前を確保するだけ　getValueでif判定して使う用
+    LexicalUnit Name = null;
     Node rightNode = null;
     Node leftNode = null;
     Stack box = new Stack();
@@ -29,7 +29,7 @@ public class ExprNode extends Node
         this.first = first;
     }
 
-    public static Node isMatch(Environment env, LexicalUnit first) {//空っぽの箱を作る。
+    public static Node isMatch(Environment env, LexicalUnit first) {
         boolean tp;
 
         LexicalType lt = first.getType();

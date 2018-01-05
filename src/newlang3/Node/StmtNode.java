@@ -14,7 +14,7 @@ public class StmtNode extends Node
 
     public StmtNode(Environment env,LexicalUnit first)
     {
-        super.env = env;//とりあえず入れてるだけ
+        super.env = env;
         super.type = NodeType.STMT;
         lu = first;
     }
@@ -47,10 +47,6 @@ public class StmtNode extends Node
         body = SubstNode.isMatch(env, lu);
         if(body != null) return body.Parse();
 
-//        body = CallSubNode.isMatch(env, lu);
-//        if(body != null){
-//            return body.Parse();
-//        }
 
         if (lu.getType() == LexicalType.END)
         {

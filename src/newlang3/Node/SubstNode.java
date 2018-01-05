@@ -17,7 +17,7 @@ public class SubstNode extends Node
     }
 
     public static Node isMatch(Environment env, LexicalUnit first) throws Exception
-    {//空っぽの箱を作る。
+    {
         LeftVarNode left = new LeftVarNode(env, first);
         if (left.isMatch(env, first) != null) {
             Node n = new SubstNode(env, first);
