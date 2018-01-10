@@ -30,55 +30,18 @@ public class ExprNode extends Node
     }
 
     public static Node isMatch(Environment env, LexicalUnit first) {
-        boolean tp;
 
         LexicalType lt = first.getType();
         switch(lt)
         {
-
-            case LP: return new ExprNode(env,first);
+            case LP: //流れ落ちましょう
             case NAME:
             case SUB:
             case INTVAL:
             case DOUBLEVAL:
-            case LITERAL:
-
+            case LITERAL: return new ExprNode(env,first);
         }
 
-
-
-        tp = first.getType().equals(LexicalType.LP);
-        if (tp == true) {
-            Node exprnode = new ExprNode(env, first);
-            return exprnode;
-        }
-        tp = first.getType().equals(LexicalType.NAME);
-        if (tp == true) {
-            //変数のときの処理あ
-
-            Node exprnode = new ExprNode(env, first);
-            return exprnode;
-        }
-        tp = first.getType().equals(LexicalType.SUB);
-        if (tp == true) {
-            Node exprnode = new ExprNode(env, first);
-            return exprnode;
-        }
-        tp = first.getType().equals(LexicalType.INTVAL);
-        if (tp == true) {
-            Node exprnode = new ExprNode(env, first);
-            return exprnode;
-        }
-        tp = first.getType().equals(LexicalType.DOUBLEVAL);
-        if (tp == true) {
-            Node exprnode = new ExprNode(env, first);
-            return exprnode;
-        }
-        tp = first.getType().equals(LexicalType.LITERAL);
-        if (tp == true) {
-            Node exprnode = new ExprNode(env, first);
-            return exprnode;
-        }
 //        if (CallfNode.isMatch(env, first) != null) {
 //            if (CallfNode.isMatch(env, first).Parse()) {
 //                Node exprnode = new ExprNode(env, first);
