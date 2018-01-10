@@ -7,7 +7,7 @@ import newlang3.LexicalUnit;
 
 import java.util.List;
 
-public class ExprListNode
+public class ExprListNode extends Node
 {
 
     List<Node> nodes;
@@ -21,10 +21,10 @@ public class ExprListNode
     public static Node isMatch(Environment env, LexicalUnit first)
     {//空っぽの箱を作る。
         Node exprnode = ExprNode.isMatch(env, first);
-        if (exprnode != null) {
-            Node a = new ExprListNode(env, first);
-            return a;
-        }
+//        if (exprnode != null) {
+//            Node a = new ExprListNode(env, first);
+//            return a;
+//        }
         return null;
     }
 
@@ -33,36 +33,36 @@ public class ExprListNode
         LexicalAnalyzerImpl lex = env.getInput();
 
         //パターン１
-        LexicalUnit unity1 = lex.get();
-        if (ExprNode.isMatch(env, unity1) != null) {
-            lex.unget(unity1);
-            if (ExprNode.isMatch(env, unity1).Parse()) {
-                return true;
-            }
-        }
-        lex.unget(unity1);
+//        LexicalUnit unity1 = lex.get();
+//        if (ExprNode.isMatch(env, unity1) != null) {
+//            lex.unget(unity1);
+//            if (ExprNode.isMatch(env, unity1).Parse()) {
+//                return true;
+//            }
+//        }
+//        lex.unget(unity1);
 
         //パターン2
-        unity1 = lex.get();
-        if (ExprNode.isMatch(env, unity1) != null) {
-            lex.unget(unity1);
-            if (ExprListNode.isMatch(env, unity1).Parse()) {
-                LexicalUnit unity2 = lex.get();
-                if (unity2.type == LexicalType.COMMA) {
-                    LexicalUnit unity3 = lex.get();
-                    if (ExprNode.isMatch(env, unity3) != null) {
-                        lex.unget(unity3);
-                        if (ExprNode.isMatch(env, unity3).Parse()) {
-                            //lex.unget(unity3);
-                            return true;
-                        }
-                    }
-                    lex.unget(unity3);
-                }
-                lex.unget(unity2);
-            }
-        }
-        lex.unget(unity1);
+//        unity1 = lex.get();
+//        if (ExprNode.isMatch(env, unity1) != null) {
+//            lex.unget(unity1);
+//            if (ExprListNode.isMatch(env, unity1).Parse()) {
+//                LexicalUnit unity2 = lex.get();
+//                if (unity2.type == LexicalType.COMMA) {
+//                    LexicalUnit unity3 = lex.get();
+//                    if (ExprNode.isMatch(env, unity3) != null) {
+//                        lex.unget(unity3);
+//                        if (ExprNode.isMatch(env, unity3).Parse()) {
+//                            //lex.unget(unity3);
+//                            return true;
+//                        }
+//                    }
+//                    lex.unget(unity3);
+//                }
+//                lex.unget(unity2);
+//            }
+//        }
+//        lex.unget(unity1);
 
         /*
          <expr_list>  ::=

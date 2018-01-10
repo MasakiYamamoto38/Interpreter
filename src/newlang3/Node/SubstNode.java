@@ -19,7 +19,8 @@ public class SubstNode extends Node
     public static Node isMatch(Environment env, LexicalUnit first) throws Exception
     {
         LeftVarNode left = new LeftVarNode(env, first);
-        if (left.isMatch(env, first) != null) {
+        if (left.isMatch(env, first) != null)
+        {
             Node n = new SubstNode(env, first);
             return n;
         }

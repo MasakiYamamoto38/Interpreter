@@ -23,15 +23,26 @@ public class StmtListNode extends Node
     }
 
     //StmtBlockもしくはBlockNode
-    public static Node isMatch(Environment env, LexicalUnit lu) {//空っぽの箱を作る。
+    public static Node isMatch(Environment env, LexicalUnit lu) throws Exception
+    {
 
-        Node node = BlockNode.isMatch(env, lu);
-        if (node != null)
-            return new StmtListNode(env, lu);
+        Debug.nodePrint("入りました","StmtList",Debug.getIndent());
+        Debug.doIndent();
 
-        node = StmtNode.isMatch(env, lu);
-        if (node != null)
+        if(BlockNode.isMatch(env,lu) != null)
+        {
+            Debug.deIndent();
             return new StmtListNode(env, lu);
+        }
+
+        if (StmtNode.isMatch(env, lu) != null)
+        {
+            Debug.deIndent();
+            return new StmtListNode(env, lu);
+        }
+
+        Debug.deIndent();
+        Debug.nodePrint(":( 該当しませんでした","StmtList",Debug.getIndent());
 
         return null;
     }

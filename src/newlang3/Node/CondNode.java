@@ -4,7 +4,8 @@ import newlang3.*;
 
 import java.util.List;
 
-public class CondNode {
+public class CondNode extends Node
+{
     Environment env;
     LexicalUnit first;
     Node left, right;
@@ -16,11 +17,13 @@ public class CondNode {
         this.first = first;
     }
 
-    public static Node isMatch(Environment env, LexicalUnit first) {//空っぽの箱を作る。
+    public static Node isMatch(Environment env, LexicalUnit first)
+    {
 
         Node exprnode = ExprNode.isMatch(env, first);
         if (exprnode != null) {
-            Node a = new CondNode(env, first);
+            //Node a = new CondNode(env, first);
+            Node a = null; //とりあえず
             return a;
         }
         return null;
@@ -29,70 +32,70 @@ public class CondNode {
     @Override
     public boolean Parse() {
 
-        LexicalAnalyzerImpl lex = env.getInput();
-        LexicalUnit unity1 = lex.get();
-        left = ExprNode.isMatch(env, unity1);
-        if (left != null) {
-            lex.unget(unity1);
-            if (left.Parse()) {
-                LexicalUnit unity2 = lex.get();
-                if (unity2.type == LexicalType.GT || unity2.type == LexicalType.LT || unity2.type == LexicalType.GE || unity2.type == LexicalType.LE || unity2.type == LexicalType.EQ || unity2.type == LexicalType.NE) {
-                    fugo = unity2.type;
-                    LexicalUnit unity3 = lex.get();
-                    right = ExprNode.isMatch(env, unity3);
-                    if (right != null) {
-                        lex.unget(unity3);
-                        if (right.Parse()) {
-
-                            //lex.unget(unity3);
-                            return true;
-                        }
-                    }
-                    lex.unget(unity3);
-                }
-                lex.unget(unity2);
-            }
-            lex.unget(unity1);
-        }
+//        LexicalAnalyzerImpl lex = env.getInput();
+//        LexicalUnit unity1 = lex.get();
+//        left = ExprNode.isMatch(env, unity1);
+//        if (left != null) {
+//            lex.unget(unity1);
+//            if (left.Parse()) {
+//                LexicalUnit unity2 = lex.get();
+//                if (unity2.type == LexicalType.GT || unity2.type == LexicalType.LT || unity2.type == LexicalType.GE || unity2.type == LexicalType.LE || unity2.type == LexicalType.EQ || unity2.type == LexicalType.NE) {
+//                    fugo = unity2.type;
+//                    LexicalUnit unity3 = lex.get();
+//                    right = ExprNode.isMatch(env, unity3);
+//                    if (right != null) {
+//                        lex.unget(unity3);
+//                        if (right.Parse()) {
+//
+//                            //lex.unget(unity3);
+//                            return true;
+//                        }
+//                    }
+//                    lex.unget(unity3);
+//                }
+//                lex.unget(unity2);
+//            }
+//            lex.unget(unity1);
+//        }
         return false;
     }
 
     public Value getValue() {//thenかelseを返すだけのbooleanValue
         Value returnvalue = new ValueImpl(true);//デフォルトは通るように設定しておけばまあなんとかなるでしょw
-        switch (fugo) {
-            case LE:
-                if (left.getValue().getIValue() <= right.getValue().getIValue()) {
-                    System.out.println("  then->");
-                    return new ValueImpl(true);
-                } else {
-                    System.out.println("  else->");
-                    return new ValueImpl(false);
-                }
-            case GE:
-                if (left.getValue().getIValue() >= right.getValue().getIValue()) {
-                    System.out.println("  then->");
-                    return new ValueImpl(true);
-                } else {
-                    System.out.println("  else->");
-                    return new ValueImpl(false);
-                }
-            case LT:
-                if (left.getValue().getIValue() < right.getValue().getIValue()) {
-                    System.out.println("  then->");
-                    return new ValueImpl(true);
-                } else {
-                    System.out.println("  else->");
-                    return new ValueImpl(false);
-                }
-            case GT:
-                if (left.getValue().getIValue() > right.getValue().getIValue()) {
-                    System.out.println("  then->");
-                    return new ValueImpl(true);
-                } else {
-                    System.out.println("  else->");
-                    return new ValueImpl(false);
-                }
-        }
+//        switch (fugo) {
+//            case LE:
+//                if (left.getValue().getIValue() <= right.getValue().getIValue()) {
+//                    System.out.println("  then->");
+//                    return new ValueImpl(true);
+//                } else {
+//                    System.out.println("  else->");
+//                    return new ValueImpl(false);
+//                }
+//            case GE:
+//                if (left.getValue().getIValue() >= right.getValue().getIValue()) {
+//                    System.out.println("  then->");
+//                    return new ValueImpl(true);
+//                } else {
+//                    System.out.println("  else->");
+//                    return new ValueImpl(false);
+//                }
+//            case LT:
+//                if (left.getValue().getIValue() < right.getValue().getIValue()) {
+//                    System.out.println("  then->");
+//                    return new ValueImpl(true);
+//                } else {
+//                    System.out.println("  else->");
+//                    return new ValueImpl(false);
+//                }
+//            case GT:
+//                if (left.getValue().getIValue() > right.getValue().getIValue()) {
+//                    System.out.println("  then->");
+//                    return new ValueImpl(true);
+//                } else {
+//                    System.out.println("  else->");
+//                    return new ValueImpl(false);
+//                }
+//        }
 
         return returnvalue;
     }
@@ -123,4 +126,4 @@ public class CondNode {
 
  */
 
-}
+//}

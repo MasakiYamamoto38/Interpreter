@@ -14,13 +14,23 @@ public class ProgramNode extends Node
         this.lu = lu;
     }
 
-    public static Node isMatch(Environment env, LexicalUnit lu)
+    public static Node isMatch(Environment env, LexicalUnit lu) throws Exception
     {
-        Node node = StmtListNode.isMatch(env, lu);
+        //--
+        Debug.nodePrint("入りました","Program",Debug.getIndent());
+        Debug.doIndent();
+        //--
 
-        if (node != null)
+        if (StmtListNode.isMatch(env, lu) != null)
+        {
+            Debug.deIndent();
             return new ProgramNode(env, lu);
+        }
 
+        //--
+        Debug.deIndent();
+        Debug.nodePrint(":( 該当しませんでした","Program",Debug.getIndent());
+        //--
         return null;
     }
 
@@ -49,15 +59,15 @@ public class ProgramNode extends Node
     @Override
     public String toString()
     {
-        String msg = "";
-        try
-        {
-            msg = "[" + stmtListNode.toString() + "]";
-        }
-        catch(Exception e)
-        {
-            msg = "[None]";//デバック用e.getMessage();
-        }
+        String msg = "Hello Hello XDDDD";
+//        try
+//        {
+//            msg = "[" + stmtListNode.toString() + "]";
+//        }
+//        catch(Exception e)
+//        {
+//            msg = "[None]";//デバック用e.getMessage();
+//        }
         return msg;
     }
 }
