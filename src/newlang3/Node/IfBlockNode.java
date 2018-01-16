@@ -17,7 +17,6 @@ public class IfBlockNode extends Node
         lu = targetLu;
     }
 
-
     @Override
     public String toString()
     {

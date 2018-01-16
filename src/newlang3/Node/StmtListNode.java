@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class StmtListNode extends Node
 {
-    private ArrayList<Node> NodeList = new ArrayList<>();
+    private ArrayList<Node> NodeList = new ArrayList<>();//メインのNodeリスト
     private Environment env;
     private LexicalUnit lu;
 
@@ -53,44 +53,41 @@ public class StmtListNode extends Node
         LexicalAnalyzerImpl lai = env.getInput();
         NodeList.clear();
 
-        int count = 0; // <!!>消そう
-        while (true) 
+        while (true) //でました無限ループp9
         {
-            Node sNode;
-
             lu = lai.get();
-            LexicalType lut = lu.getType();
+            LexicalType luType = lu.getType();
 
-            if (lut == LexicalType.EOF || lu == null ||
-                    lut == LexicalType.ELSE || lut == LexicalType.ENDIF || lut == LexicalType.LOOP)
+            if (lu == null ||
+                    luType == LexicalType.EOF ||
+                    luType == LexicalType.ELSE ||
+                    luType == LexicalType.ENDIF ||
+                    luType == LexicalType.LOOP)
             {
-                if(lut == LexicalType.ELSE||lut == LexicalType.ENDIF||lut == LexicalType.LOOP)
+                switch(luType)
                 {
-                    lai.unget(lu);
-                    lai.unget(new LexicalUnit(LexicalType.NL));
+                    case ELSE:
+                    case ENDIF:
+                    case LOOP:
+                        lai.unget(lu);
+                        lai.unget(new LexicalUnit(LexicalType.NL));
                 }
-                break;
+                break; // EOF もしくはELSEもしくはENDIFもしくはLOOPだったら抜けるこの無限LOOPから抜ける
             }
-            if (lut == LexicalType.NL)
-                continue;
+            if (luType == LexicalType.NL) continue;//その行の命令一式終わったので、次行っていいよ指示
 
-            sNode = StmtNode.isMatch(env, lu);
-            if (sNode == null)
-                sNode = BlockNode.isMatch(env, lu);
-
-            if (sNode == null)
+            Node stn = StmtNode.isMatch(env, lu);
+            if (stn == null)stn = BlockNode.isMatch(env, lu);
+            if (stn == null)
             {
                 lai.unget(lu);
                 return false;
             }
 
             lai.unget(lu);
-            if (!sNode.Parse()) return false;
-
-            count += 1;
-            NodeList.add(sNode);
+            if (!stn.Parse()) return false;
+            NodeList.add(stn);
         }
-
         return true;
     }
 
@@ -100,15 +97,10 @@ public class StmtListNode extends Node
 
         System.out.println("-----ステートメントリストノード-----");
 
-        int count = 0;
-        while (true)
+        for(int i = 0; i < NodeList.size(); i++)
         {
-            if (NodeList.size() == count)
-                break;
-
-            Node popNode = NodeList.get(count);
-            count++;
-            System.out.print(count + "|");
+            Node popNode = NodeList.get(i);
+            System.out.print(i + "|");
             val = popNode.getValue();
         }
         return val;

@@ -29,7 +29,8 @@ public class ExprListNode extends Node
     }
 
     @Override
-    public boolean Parse() {
+    public boolean Parse()
+    {
         LexicalAnalyzerImpl lex = env.getInput();
 
         //パターン１

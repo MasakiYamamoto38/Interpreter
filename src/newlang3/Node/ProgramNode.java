@@ -44,16 +44,15 @@ public class ProgramNode extends Node
         if (stmtListNode == null)
             return false;
         lex.unget(first);
+
         return stmtListNode.Parse();
     }
 
     @Override
     public Value getValue() throws Exception
     {
-        Value val = stmtListNode.getValue();//test
-
-        return val;
-        //return new ValueImpl("compleate program");
+        //return stmtListNode.getValue();
+        return new ValueImpl("compleate program");
     }
 
     @Override
