@@ -47,6 +47,13 @@ public class LexicalAnalyzerImpl
         return swapLexicals[gotIndex];
     }
 
+    //unget = trueとした場合自動的にungetもやってくれる
+    public LexicalUnit get(boolean unget)
+    {
+        LexicalUnit lu = this.get();
+        if(unget) this.unget(lu);
+        return lu;
+    }
 
     public boolean unget()
     {
@@ -68,7 +75,6 @@ public class LexicalAnalyzerImpl
         stk.push(lu);
         return true;
     }
-
 
     public int getIndex()
     {
@@ -101,7 +107,6 @@ public class LexicalAnalyzerImpl
         lxal.add(new LexicalUnit(LexicalType.EOF));
         LexicalUnit[] lus = new LexicalUnit[lxal.size()];
         for (int i = 0; i < lxal.size(); i++) lus[i] = lxal.get(i);
-
 
         return lus;
     }
